@@ -22,6 +22,25 @@ const writeUserFile = (user)=>{
     }
 }
 
+
+// Obtener lista de usuarios
+exports.getall = (req, res) => {
+    const users = readUsersFromFile();
+    if (!users) return res.status(404).json({message: 'datos no encontrados'});
+    res.json({data: users})
+}
+
+// Obtener usuario
+exports.get = (req, res) => {
+    const { id } = req.params;
+    const users = readUsersFromFile();
+    if (!users) return res.status(404).json({message: 'datos no encontrados'});
+    
+    const userIndex = users.findIndex(u => u.id === parseInt(id));
+
+    res.json({data: users[userIndex]});
+}
+
 // Crear usuario
 exports.create = async(req, res)=>{
     // definir esquema de validacion
@@ -141,21 +160,3 @@ exports.profile = (req, res) => {
     }
 }
 
-exports.randuser = (req, res) => {
-    // const name = req;
-    // console.log(name);
-    try {
-        const email = req.query.id;
-        if (!email) return res.status(401).res.json({message: "email desconocido"});
-        res.json({resp: 'dasdasd'})
-    } catch (error) {
-        res.json({message: 'Error: Email desconocido'})
-        console.log('err');
-    }
-}
-
-exports.getall = (req, res) => {
-    const users = readUsersFromFile();
-    if (!users) return res.status(404).json({message: 'datos no encontrados'});
-    res.json({data: users})
-}
