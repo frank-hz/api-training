@@ -22,7 +22,7 @@ app.use('/', (req, res) => {
     res.render('index');
 })
 
-const port = process.env.PORT || 1000;
+const port = process.env.PORT || 3500;
 app.listen(port, function(){
     console.log(`Server live on ${port}`);
 })
